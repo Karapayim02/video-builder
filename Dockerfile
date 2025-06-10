@@ -1,8 +1,15 @@
-FROM php:8.2-cli
+FROM php:8.1-cli
 
-RUN apt-get update && apt-get install -y ffmpeg unzip
+# Установка ffmpeg
+RUN apt-get update && apt-get install -y ffmpeg
 
-WORKDIR /app
+# Копируем все файлы в контейнер
 COPY . /app
+WORKDIR /app
 
-CMD ["php", "video-merge.php"]
+# Открываем порт
+EXPOSE 80
+
+# Запускаем встроенный PHP-сервер (обслуживает любые .php файлы)
+CMD ["php", "-S", "0.0.0.0:80"]
+
